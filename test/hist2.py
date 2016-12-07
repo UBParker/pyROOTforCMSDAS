@@ -12,7 +12,7 @@ nptBs = len(ptBs) - 1
 
 # Define a binned histogram for storing the peak of the gaussian fit to a Top mass spectrum in each Pt bin
 
-hpeak = ROOT.TH1F("hpeak", " ;mass of jet (GeV); mean of Gaussian fit",  nptBs, ptBs)  
+hpeak = ROOT.TH1F("hpeak", " ;p_{t} of jet (GeV); mean of Gaussian fit",  nptBs, ptBs)  
   
 
 
@@ -69,7 +69,7 @@ for ihisto , histo in enumerate(hist_list) :
     
    # Filling histogram with peak value
     massToFill = [ 250, 350, 450, 650 ]
-    ibin = hscale.GetXaxis().FindBin(massToFill[ihisto])
+    ibin = hpeak.GetXaxis().FindBin(massToFill[ihisto])
     hpeak.SetBinContent(ibin, mean_data )
     hpeak.SetBinError(ibin, emean_data)
 
@@ -94,7 +94,7 @@ for ihisto , histo in enumerate(hist_list) :
    
 c1 = ROOT.TCanvas('c1','')
 
-thepeak.Draw('p')
+hpeak.Draw('p')
 
 # Set the maximum value for the y axis
 maxy= theHist.GetMaximum() 
