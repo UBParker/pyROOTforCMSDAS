@@ -12,7 +12,7 @@ nptBs = len(ptBs) - 1
 
 # Define a binned histogram for storing the peak of the gaussian fit to a Top mass spectrum in each Pt bin
 
-hpeak = ROOT.TH1F("hpeak", " ;p_{T} of jet (GeV); Peak Location ",  nptBs, ptBs)  
+hpeak = ROOT.TH1F("hpeak", " ;mass of jet (GeV); mean of Gaussian fit",  nptBs, ptBs)  
   
 
 
@@ -21,7 +21,7 @@ hpeak = ROOT.TH1F("hpeak", " ;p_{T} of jet (GeV); Peak Location ",  nptBs, ptBs)
 theInfile = ROOT.TFile("../samples/infile.root","READ")
 
 # Choose which stage of the selection you would like to see (0-17)
-theSelectionStage = 16
+theSelectionStage = 15
 
 # Get the histograms of AK8 jet mass binned by Pt of the jet
 
@@ -63,10 +63,17 @@ for ihisto , histo in enumerate(hist_list) :
     ewidth_data = theFitFunc.GetParError(2); 
 
     # Printing fit information
-    print 'amp {} #pm eamp {}'.format(amp_data, eamp_data    ) 
+    print 'amp {0:3.2f} #pm eamp {1:3.2f}'.format(amp_data, eamp_data    ) 
     print 'mean_data   '+str(mean_data   ) + 'emean_data  '+str(emean_data  ) 
     print 'width_data {0:3.2f} #pm {1:1.2f} '.format(width_data , ewidth_data ) 
     
+   # Filling histogram with peak value
+    massToFill = [ 250, 350, 450, 650 ]
+    ibin = hscale.GetXaxis().FindBin(massToFill[ihisto])
+    hpeak.SetBinContent(ibin, mean_data )
+    hpeak.SetBinError(ibin, emean_data)
+
+
     ROOT.gStyle.SetOptFit(1111)
     c = ROOT.TCanvas('c','')
     
@@ -85,10 +92,19 @@ for ihisto , histo in enumerate(hist_list) :
     c.Print('plots/'+ str(histo) + '_' + 'GaussianFit.pdf', 'pdf' )
     c.Print('plots/'+ str(histo) + '_' + 'GaussianFit.root', 'root' )
    
-# re-binning, scaling, plotting and fitting to a Gaussian.    
-    
-ROOT.gStyle.SetOptFit(1111)
-theCanvas = ROOT.TCanvas('theCanvas','')
+c1 = ROOT.TCanvas('c1','')
+
+thepeak.Draw('p')
+
+# Set the maximum value for the y axis
+maxy= theHist.GetMaximum() 
+theHist.SetMaximum( maxy * 1.2)
+theHist.GetXaxis().SetRangeUser(0 , 800 )
+
+c1.Update()
+c1.Draw()
+
+c1.Print('plots/AK8MPtBinned' + '_' + 'GaussianFitMeanValues.png', 'png' )
 
 
 
