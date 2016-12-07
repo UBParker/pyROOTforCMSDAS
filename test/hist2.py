@@ -19,12 +19,15 @@ hpeak = ROOT.TH1F("hpeak", " ;p_{T} of jet (GeV); Peak Location ",  nptBs, ptBs)
 
 theInfile=ROOT.TFile("infile.root","READ")
 
+# Choose which stage of the selection you would like to see (0-17)
+theSelectionStage = 12
+
 # Get the histograms of AK8 jet mass binned by Pt of the jet
 
-hist_list = [ "AK8MPt200To300Hist17",    
-              "AK8MPt300To400Hist17",
-              "AK8MPt400To500Hist17",
-              "AK8MPt500To800Hist17"
+hist_list = [ "AK8MPt200To300Hist" + int(theSelectionStage),    
+              "AK8MPt300To400Hist" + int(theSelectionStage),    
+              "AK8MPt400To500Hist" + int(theSelectionStage),    
+              "AK8MPt500To800Hist" + int(theSelectionStage),    
               ]
               
 # loop over histos and for each plot it and fit to a gaussian then save the mean              
