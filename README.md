@@ -14,4 +14,8 @@ cmsenv
 git clone https://github.com/UBParker/pyROOTforCMSDAS.git
 cd pyROOTforCMSDAS/test/
 
+python hist1.py
+
+python hist2.py
+
 ```

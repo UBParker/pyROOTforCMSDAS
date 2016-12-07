@@ -5,10 +5,10 @@ import ROOT
 theOutfile=ROOT.TFile("outfile.root","RECREATE")
 
 
-theInfile=ROOT.TFile("infile.root","READ")
+theInfile=ROOT.TFile("../samples/infile.root","READ")
 
 
-theHist = theInfile.Get("AK8MHist12")
+theHist = theInfile.Get("AK8MHist16")
 
 ROOT.gStyle.SetOptFit(1111)
 theCanvas = ROOT.TCanvas('theCanvas','')
