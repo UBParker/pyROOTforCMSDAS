@@ -3,7 +3,7 @@
 import ROOT
 import array as a
 
-theOutfile=ROOT.TFile("outfile.root","RECREATE")
+theOutfile=ROOT.TFile("outfile2.root","RECREATE")
 
 
 # Bins are defined by an array 
@@ -109,6 +109,8 @@ c1.Print('plots/AK8MPtBinned' + '_' + 'GaussianFitMeanValues.png', 'png' )
 
 
 theOutfile.cd()
+hpeak.Write()
+
 theOutfile.Write()
 theOutfile.Close()
 
